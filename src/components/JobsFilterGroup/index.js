@@ -3,18 +3,17 @@ import './index.css'
 
 const JobsFilterGroup = props => {
   const getEmploymentTypeList = () => {
-    const {employmentTypesList} = props
+    const {employmentTypesList, updateEmploymentTypesChecked} = props
 
     return employmentTypesList.map(employ => {
-      const {changeEmploymentType} = props
-      const onChangeEmployType = event =>
-        changeEmploymentType(event.target.value)
+      const updateTypeslist = () =>
+        updateEmploymentTypesChecked(employ.employmentTypeId)
 
       return (
         <li
           className="checkbox-list-items"
           key={employ.employmentTypeId}
-          onChange={onChangeEmployType}
+          onChange={updateTypeslist}
         >
           <input
             type="checkbox"
@@ -38,23 +37,22 @@ const JobsFilterGroup = props => {
   )
 
   const getSalaryRangeList = () => {
-    const {salaryRangesList} = props
+    const {updateSalaryRangeId, salaryRangesList, salaryRange} = props
 
     return salaryRangesList.map(salary => {
-      const {changeSalaryRange} = props
-      const onChangeSalary = () => changeSalaryRange(salary.salaryRangeId)
+      const onChangeRange = () => updateSalaryRangeId(salary.salaryRangeId)
+
+      const isChecked = salary.salaryRangeId === salaryRange
 
       return (
-        <li
-          className="checkbox-list-items"
-          key={salary.salaryRangeId}
-          onChange={onChangeSalary}
-        >
+        <li className="checkbox-list-items" key={salary.salaryRangeId}>
           <input
             type="radio"
             className="check-radio"
             id={salary.salaryRangeId}
             name="salary"
+            checked={isChecked}
+            onChange={onChangeRange}
           />
           <label htmlFor={salary.salaryRangeId} className="check-label">
             {salary.label}
